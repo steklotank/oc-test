@@ -26,3 +26,9 @@ def editor(request, title):
 		"title": title, 
         "article": util.get_entry(title)
 	})
+
+def create(request):
+    return render(request, "encyclopedia/create.html", {
+        
+        "entries": util.list_entries() 
+    })
