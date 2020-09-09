@@ -11,10 +11,15 @@ def index(request):
     })
 
 def title(request, title):
-	return render (request,"encyclopedia/title.html", {
-		"title": title, 
-        "article": markdown2.markdown(util.get_entry(title))
-	})
+    if util.get_entry(title):
+        return render (request,"encyclopedia/title.html", {
+            "title": title, 
+            "article": markdown2.markdown(util.get_entry(title))
+})
+    else:
+        return render (request,"encyclopedia/404.html",{
+        "entries": util.list_entries() 
+    })
 
 def editor(request, title):
 	return render (request,"encyclopedia/title.html", {
