@@ -35,7 +35,7 @@ def random_page(request):
             random_page = random.choice(util.list_entries()) 
             return redirect('title', title=random_page)
 
-def search(request):
+def search(request): 
         if request.method == "POST":
             form = NewSearchForm(request.POST)
             if form.is_valid():
