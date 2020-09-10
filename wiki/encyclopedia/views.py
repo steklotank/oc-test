@@ -1,12 +1,13 @@
+from django import forms
 from django.shortcuts import render, redirect
 import markdown2
 from . import util
 import random
-from django import forms
+from django.http import HttpRequest
 
 
-class SearchForm(forms.Form):
-    search = forms.CharField(label="query")
+class NewSearchForm(forms.Form):
+    query = forms.CharField()
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -35,12 +36,19 @@ def random_page(request):
             return redirect('title', title=random_page)
 
 def search(request):
-    if request.method == "POST":
-        form= request.POST
-        data= form.get("query")
-        return render(request,  "encyclopedia/search.html",{
-        "query": data
-        })
+        if request.method == "POST":
+            form = NewSearchForm(request.POST)
+            if form.is_valid():
+                query= form.cleaned_data.get("query")
+                if util.get_entry(query):
+                    return redirect('title', title=query)
+                else:
+                    return render(request, "encyclopedia/search.html", {
+                    
+                    "query": query 
+                    })
+        
+
                     
 """
 def editor(request, title):
