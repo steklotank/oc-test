@@ -4,6 +4,7 @@ import markdown2
 from . import util
 import random
 from django.http import HttpRequest
+import re
 
 
 class NewSearchForm(forms.Form):
@@ -39,14 +40,33 @@ def search(request):
         if request.method == "POST":
             form = NewSearchForm(request.POST)
             if form.is_valid():
-                query= form.cleaned_data.get("query")
+                query = form.cleaned_data.get("query")
+
                 if util.get_entry(query):
                     return redirect('title', title=query)
-                else:
+
+                else:  
+
+                    list_to_search = util.list_entries()
+                    prase_to_search = f"r'{query}'"
+                    result = []
+                #    for item in list_to_search:
+                #        if re.findall(prase_to_search, item, re.IGNORECASE):
+                #            result=result.append(item)     
+                #        else:
+                #             return render(request, "encyclopedia/search.html", {
+                #                "result" : "no matches"
+                #                 })
                     return render(request, "encyclopedia/search.html", {
-                    
-                    "query": query 
+                     "result" : result,
+                     "list_to_search" : list_to_search,
+                     "prase_to_search": prase_to_search,
+                     "query" : query
                     })
+                         
+                   
+                     
+
         
 
                     
