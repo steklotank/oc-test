@@ -2,6 +2,8 @@ import re
 
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
+from django.http import HttpRequest
+
 
 
 def list_entries():
@@ -35,3 +37,13 @@ def get_entry(title):
         return f.read().decode("utf-8")
     except FileNotFoundError:
         return None
+
+def search (list_to_search, phrase):
+    
+    prase_to_search = f"r'{phrase}'"
+    result = []
+    for item in list_to_search:
+        if re.findall(prase_to_search, item, re.IGNORECASE):
+            result=result.append(item)
+        result = request.session["result"]
+    return result    

@@ -36,6 +36,7 @@ def random_page(request):
             random_page = random.choice(util.list_entries()) 
             return redirect('title', title=random_page)
 
+
 def search(request): 
         if request.method == "POST":
             form = NewSearchForm(request.POST)
@@ -50,19 +51,14 @@ def search(request):
                     list_to_search = util.list_entries()
                     prase_to_search = f"r'{query}'"
                     result = []
-                #    for item in list_to_search:
-                #        if re.findall(prase_to_search, item, re.IGNORECASE):
-                #            result=result.append(item)     
-                #        else:
-                #             return render(request, "encyclopedia/search.html", {
-                #                "result" : "no matches"
-                #                 })
+                    for item in list_to_search:
+                        if query.lower() in item.lower() :
+                            result+=[item]               
                     return render(request, "encyclopedia/search.html", {
-                     "result" : result,
-                     "list_to_search" : list_to_search,
-                     "prase_to_search": prase_to_search,
-                     "query" : query
-                    })
+                        "entries" : result,
+                         })
+                        
+                        
                          
                    
                      
@@ -77,12 +73,4 @@ def editor(request, title):
         "article": util.get_entry(title)
 	})
 """
-
-"""
-def search(request):
-        return render (request,"encyclopedia/title.html", {
-            "title": random.choice(list_entries()), 
-            "article": markdown2.markdown(util.get_entry(title))
-            })
- """   
     
