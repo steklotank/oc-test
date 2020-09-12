@@ -7,7 +7,8 @@ urlpatterns = [
     path("<str:title>", views.title, name="title"),
     path("create/", views.create, name="create"),
     path("random_page/", views.random_page, name="random_page"),
-    re_path("search/", views.search, name='search'),
+    path("search/", views.search, name='search'),
+    path("editor/", views.editor, name='editor'),
 
 
 ]

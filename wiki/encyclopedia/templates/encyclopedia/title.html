@@ -7,7 +7,9 @@
 {% block body %}
 
 {{ article|safe }}
-
-<input type="submit" name="edit" value="edit page">
+<form action="{% url 'editor' %}" method="post">
+{% csrf_token %}
+<input type="submit" name="edit" value="edit page" >
+</form>
 
 {% endblock %}

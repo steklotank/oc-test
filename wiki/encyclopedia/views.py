@@ -10,6 +10,9 @@ import re
 class NewSearchForm(forms.Form):
     query = forms.CharField()
 
+class NewCreateForm(forms.Form):
+    query = forms.CharField()
+
 def index(request):
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries() 
@@ -27,12 +30,22 @@ def title(request, title):
     })
 
 def create(request):
-    return render(request, "encyclopedia/create.html", {
-        
-        "entries": util.list_entries() 
-    })
+        if request.method == "POST":
+            form = NewSearchForm(request.POST)
+            if form.is_valid():
+                title = form.cleaned_data.get["title"]
+                content = form.cleaned_data.get["content"]
+                m2_content = markdown2.markdown(content)
+                util.save_entry(title, m2_content)
+                return render (request,"encyclopedia/title.html", {
+                 "title": title, 
+                "article": m2_content
+})
 
-def random_page(request):
+        return render(request, "encyclopedia/create.html", {   
+        })
+
+def random_page(request):   
             random_page = random.choice(util.list_entries()) 
             return redirect('title', title=random_page)
 
@@ -49,7 +62,6 @@ def search(request):
                 else:  
 
                     list_to_search = util.list_entries()
-                    prase_to_search = f"r'{query}'"
                     result = []
                     for item in list_to_search:
                         if query.lower() in item.lower() :
@@ -58,19 +70,12 @@ def search(request):
                         "entries" : result,
                          })
                         
-                        
-                         
-                   
-                     
-
-        
-
                     
-"""
 def editor(request, title):
 	return render (request,"encyclopedia/title.html", {
 		"title": title, 
         "article": util.get_entry(title)
 	})
-"""
+
+
     

@@ -38,12 +38,3 @@ def get_entry(title):
     except FileNotFoundError:
         return None
 
-def search (list_to_search, phrase):
-    
-    prase_to_search = f"r'{phrase}'"
-    result = []
-    for item in list_to_search:
-        if re.findall(prase_to_search, item, re.IGNORECASE):
-            result=result.append(item)
-        result = request.session["result"]
-    return result    
