@@ -1,0 +1,15 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+   Edit {{ title }}
+{% endblock %}
+
+{% block body %}
+
+
+
+<input type="text" value="{{ article|safe }}">
+
+<input type="submit" name="save" value="edit page">
+
+{% endblock %}

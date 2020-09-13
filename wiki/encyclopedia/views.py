@@ -53,6 +53,7 @@ def random_page(request):
 def search(request): 
         if request.method == "POST":
             form = NewSearchForm(request.POST)
+
             if form.is_valid():
                 query = form.cleaned_data.get("query")
 
@@ -60,11 +61,11 @@ def search(request):
                     return redirect('title', title=query)
 
                 else:  
-
                     list_to_search = util.list_entries()
                     result = []
                     for item in list_to_search:
-                        if query.lower() in item.lower() :
+
+                        if query.lower() in item.lower():
                             result+=[item]               
                     return render(request, "encyclopedia/search.html", {
                         "entries" : result,
