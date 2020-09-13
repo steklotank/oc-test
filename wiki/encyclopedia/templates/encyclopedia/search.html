@@ -9,7 +9,7 @@
 
     <ul>
         {% for item in entries %}
-            <li> <a href="{%url 'index'%}{{ item }}">{{ item }}</a>  </li>
+            <li> <a href="{% url 'index' %}{{ item }}">{{ item }}</a>  </li>
             {% empty %}
             <li>No matches</li>
         {% endfor %}

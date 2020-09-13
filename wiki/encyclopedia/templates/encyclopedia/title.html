@@ -7,8 +7,10 @@
 {% block body %}
 
 {{ article|safe }}
-<form action="{% url 'editor' %}" method="post">
+<form action="{%url 'index'%}{{ title }}" method="post">
 {% csrf_token %}
+<input type="hidden" name="title" value="{{ title }}">
+<input type="hidden" name="source" value="False">
 <input type="submit" name="edit" value="edit page" >
 </form>
 
