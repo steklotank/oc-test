@@ -25,7 +25,9 @@ SECRET_KEY = '%710m*zic)#0u((qugw#1@e^ty!c)9j04956v@ly(_86n$rg)h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [http://wiki-new-project.192.168.99.101.nip.io/]
+ALLOWED_HOSTS = [
+    '.nip.io',
+]
 
 
 # Application definition
